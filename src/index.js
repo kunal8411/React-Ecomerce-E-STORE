@@ -5,10 +5,9 @@ import {firebase_app,auth0} from './data/config';
 import { configureFakeBackend ,authHeader, handleResponse } from "./services/fack.backend";
 import { BrowserRouter, Switch, Route,Redirect } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-
 // ** Import custom components for redux **
 import { Provider } from 'react-redux';
-import store from './store';
+import {store} from './store';
 import App from "./components/app";
 import { Auth0Provider } from '@auth0/auth0-react'
 

@@ -8,6 +8,22 @@ const INIT_STATE = {
     cart: [],
 };
 
+
+// get appi call for all the products in card for that user ->that will be my initaial state
+
+// function reducer (state = initState(), action) {
+//     return state
+// }
+
+// function initState () {
+//     return { 
+//         token: localStorage.userJWT, 
+//         email: localStorage.userEmail, 
+//         id: localStorage.userId, 
+//         surname: localStorage.surname
+//     }
+// }
+
 export default (state = INIT_STATE, action) => {
 
     switch (action.type) {
@@ -20,7 +36,7 @@ export default (state = INIT_STATE, action) => {
                 } else {
                     cartAcc.push(product)
                 }
-                return cartAcc
+                return cartAcc;
             }, [])
 
             return { ...state, cart }

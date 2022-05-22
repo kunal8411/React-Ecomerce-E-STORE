@@ -11,13 +11,14 @@ import AllFilters from './filters/allfilters';
 import {SORT_BY} from '../../../redux/actionTypes'
 import  {watchfetchProducts} from "../../../redux/ecommerce/product/action"
 import { Filters,ShowingProducts,NotFoundData,ProductDetails,Quantity,AddToCart,ViewDetails,ProductSizeArray } from "../../../constant";
-  
+import allProducts from './AllProducts';  
 const EcommerceApp = (props) => {
 
   const layoutColumns = 3;
   const data = useSelector(content => content.Product.productItems);
   const filters = useSelector(content => content.Filters);
-  const products = getVisibleproducts(data, filters)
+  const products= allProducts
+  // const products = getVisibleproducts(data, filters)
   const symbol = useSelector(content => content.Product.symbol);
   const dispatch = useDispatch();
 
@@ -121,7 +122,7 @@ const EcommerceApp = (props) => {
 
   const addcart = (product, qty) => {
     dispatch({ type: 'ADD_TO_CART', payload: { product, qty } })
-    props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
+    // props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
   }
 
   const addWishList = (product) => {
@@ -283,7 +284,8 @@ const EcommerceApp = (props) => {
                             <span className="ribbon ribbon ribbon-clip ribbon-warning">
                               {item.status}
                             </span> : ''}
-                          <img className="img-fluid" src={require("../../../assets/images/" + item.img)} alt="" />
+                          {/* <img className="img-fluid" src={require("../../../assets/images/" + item.img)} alt="" /> */}
+                          <img className="img-fluid" src="https://5.imimg.com/data5/PJ/DI/MY-3877854/round-neck-plain-tshirt-with-multi-color-design-500x500.png" alt="" />
                           <div className="product-hover">
                             <ul>
                               <li>

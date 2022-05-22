@@ -1,8 +1,8 @@
-[
+const allProducts=[
     {
         "id": 1,
-        "img": "ecommerce/01.jpg",
-        "name":"Casual T-Shirt",
+        "img": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.indiamart.com%2Fproddetail%2Fround-neck-plain-tshirt-with-multi-color-design-18553651988.html&psig=AOvVaw2uzf_3qHC1E3mIA9p0xEWB&ust=1653305471023000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPjK6_2A8_cCFQAAAAAdAAAAABAD",
+        "name":"Casual T-Shirtt",
         "note": "Simply dummy text of the printing",
         "discription": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
         "discountPrice": "350.00",
@@ -1084,3 +1084,5 @@
         ]
     }
 ]
+
+export default allProducts;

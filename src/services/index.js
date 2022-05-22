@@ -59,6 +59,7 @@ export const getMinMaxPrice = (products) => {
 
 
 export const getVisibleproducts = (data, { brand, color, value, sortBy ,searchBy}) => {
+    console.log("i am here ")
     return data.filter(product => {
         
         let brandMatch;

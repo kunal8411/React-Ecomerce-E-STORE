@@ -1,4 +1,4 @@
-import React, { useState ,Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import logo from '../../../assets/images/endless-logo.png';
 import Language from './language';
 import UserMenu from './userMenu';
@@ -6,16 +6,18 @@ import Notification from './notification';
 import AddToCart from './addtocart';
 import SearchHeader from './searchHeader';
 import { Link } from 'react-router-dom';
-import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal,ShoppingCart } from 'react-feather';
-import {EN} from '../../../constant'
-import store from '../../../store';
+import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal, ShoppingCart } from 'react-feather';
+import { EN } from '../../../constant'
+import { store, persistor } from '../../../store';
 
 const Header = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const [rightSidebar, setRightSidebar] = useState(true);
   const [headerbar, setHeaderbar] = useState(true);
-
- const openCloseSidebar = () => {
+  const [cartWindow, setCartWindow] = useState(false);
+  useEffect(() => {
+  })
+  const openCloseSidebar = () => {
     if (sidebar) {
       setSidebar(!sidebar)
       document.querySelector(".page-main-header").classList.remove('open');
@@ -23,7 +25,7 @@ const Header = (props) => {
     } else {
       setSidebar(!sidebar)
       document.querySelector(".page-main-header").classList.add('open');
-      document.querySelector(".page-sidebar").classList.add('open'); 
+      document.querySelector(".page-sidebar").classList.add('open');
     }
   }
 
@@ -58,7 +60,9 @@ const Header = (props) => {
       }
     }
   }
-  console.log("store.getState()",store.getState())
+  function openCartWindow() {
+    setCartWindow(!cartWindow);
+  }
   return (
     <Fragment>
       <div className="page-main-header" >
@@ -101,12 +105,23 @@ const Header = (props) => {
                 <Notification />
               </li>
               {/* add to cart icon  */}
-              <li className="onhover-dropdown">
+              <li className="onhover-dropdown"  >
                 <AddToCart />
                 <ShoppingCart />
                 <span className=""></span>
                 <AddToCart />
               </li>
+
+
+
+
+              {/* <li>
+
+                <a onClick={openCartWindow} className="text-dark" href="#!">
+                  <ShoppingCart />
+                </a>
+              </li> */}
+
               {/* <li>
                 <a href="#javascript" onClick={showRightSidebar}>
                   <MessageCircle />
@@ -115,7 +130,7 @@ const Header = (props) => {
               </li> */}
               <UserMenu />
             </ul>
-            <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal/></div>
+            <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal /></div>
           </div>
           <script id="result-template" type="text/x-handlebars-template">
             <div className="ProfileCard u-cf">
@@ -133,7 +148,11 @@ const Header = (props) => {
           <script id="empty-template" type="text/x-handlebars-template">
             <div className="EmptyMessage">{"Your search turned up 0 results. This most likely means the backend is down, yikes!"}</div>
           </script>
+          {/* {
+            cartWindow ? <AddToCart /> : null
+          } */}
         </div>
+
       </div>
     </Fragment>
   )
