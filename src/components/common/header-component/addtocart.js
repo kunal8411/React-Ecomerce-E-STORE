@@ -22,9 +22,9 @@ export class AddToCart extends Component {
         <div>
           <ul className="notification-dropdown onhover-show-div p-0">
             <li>
-              {Notification}{" "}
+              Cart Items
               <span className="badge badge-pill badge-primary pull-right">
-                {"3"}
+                {cart?.length}
               </span>
             </li>
             {cart?.length > 0 ? (
