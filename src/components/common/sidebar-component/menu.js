@@ -9,7 +9,7 @@ import {
     Airplay,
     FolderPlus,
     File,
-    Command, Cloud, Book, FileText, Server, Image, Sliders, Map, GitPullRequest, Calendar, Edit, Mail, MessageSquare, UserCheck, Layers, HelpCircle, Database, Headphones, Mic, ShoppingBag, Search, AlertOctagon, Lock, Briefcase, BarChart,Target, List, Package
+    Command, Cloud, Book, FileText, Server, Image, Sliders, Map, GitPullRequest, Calendar, Edit, Mail, MessageSquare, UserCheck, Layers, HelpCircle, Database, Headphones, Mic, ShoppingBag, Search, AlertOctagon, Lock, Briefcase, BarChart, Target, List, Package
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -27,6 +27,27 @@ export const MENUITEMS = [
         title: 'Widgets', icon: Airplay, type: 'sub', active: false, children: [
             { path: '/widgets/general', title: 'General', type: 'link' },
             { path: '/widgets/chart', title: 'Chart', type: 'link' },
+        ]
+    },
+    {
+        title: 'Natural Oils', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Essential Oils', type: 'link' },
+            { path: '/ecommerce/product', title: 'Carrier Oil', type: 'link' },
+            { path: '/ecommerce/product', title: 'Fragrance Oil', type: 'link' },
+        ]
+    },
+    {
+        title: 'Raw Ingredients', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Clays', type: 'link' },
+            { path: '/ecommerce/product', title: 'Waxes', type: 'link' },
+            { path: '/ecommerce/product', title: 'Butters', type: 'link' },
+            { path: '/ecommerce/product', title: 'Herbal Powder', type: 'link' },
+        ]
+    },
+    {
+        title: 'Diy', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Soap Bases', type: 'link' },
+            { path: '/ecommerce/product', title: 'Colors', type: 'link' },
         ]
     },
     {
@@ -134,7 +155,7 @@ export const MENUITEMS = [
             },
 
 
-            
+
         ]
     },
     {

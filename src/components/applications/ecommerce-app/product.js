@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Breadcrumb from '../../common/breadcrumb';
 import { Grid, List, ChevronDown } from 'react-feather';
-import banner from '../../../assets/images/ecommerce/banner.jpg';
+import banner from '../../../assets/images/ecommerce/12.jpg';
 import errorImg from '../../../assets/images/search-not-found.png';
 import Modal from 'react-responsive-modal';
 import { getVisibleproducts } from '../../../services/index';

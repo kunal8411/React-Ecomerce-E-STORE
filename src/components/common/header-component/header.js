@@ -3,12 +3,14 @@ import logo from '../../../assets/images/endless-logo.png';
 import Language from './language';
 import UserMenu from './userMenu';
 import Notification from './notification';
+import AddToCart from './addtocart';
 import SearchHeader from './searchHeader';
 import { Link } from 'react-router-dom';
-import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal } from 'react-feather';
+import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal,ShoppingCart } from 'react-feather';
 import {EN} from '../../../constant'
+import store from '../../../store';
 
-const Header = () => {
+const Header = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const [rightSidebar, setRightSidebar] = useState(true);
   const [headerbar, setHeaderbar] = useState(true);
@@ -56,7 +58,7 @@ const Header = () => {
       }
     }
   }
-
+  console.log("store.getState()",store.getState())
   return (
     <Fragment>
       <div className="page-main-header" >
@@ -87,23 +89,30 @@ const Header = () => {
                   <Maximize />
                 </a>
               </li>
-              <li className="onhover-dropdown">
+              {/* <li className="onhover-dropdown">
                 <a className="txt-dark" href="#javascript">
                   <h6>{EN}</h6></a>
                 <Language />
-              </li>
+              </li> */}
               <li className="onhover-dropdown">
                 <Notification />
                 <Bell />
                 <span className="dot"></span>
                 <Notification />
               </li>
-              <li>
+              {/* add to cart icon  */}
+              <li className="onhover-dropdown">
+                <AddToCart />
+                <ShoppingCart />
+                <span className=""></span>
+                <AddToCart />
+              </li>
+              {/* <li>
                 <a href="#javascript" onClick={showRightSidebar}>
                   <MessageCircle />
                   <span className="dot"></span>
                 </a>
-              </li>
+              </li> */}
               <UserMenu />
             </ul>
             <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal/></div>
