@@ -38,8 +38,9 @@ const AddToCart = (props) => {
   const removefromcart = (item) => {
     dispatch(removeFromCart(item));
   };
-  console.log("prosp are ", props);
+  //   console.log("prosp are ", props);
   let { cart } = props;
+  console.log("cart is------>", cart);
   return (
     <Fragment>
       <Breadcrumb title="Add To Cart" parent="Ecommerce" />
@@ -71,28 +72,23 @@ const AddToCart = (props) => {
                             return (
                               <tr key={index}>
                                 <td>
-                                  {/* <img
-                                    className="img-fluid img-60"
-                                    src={require("../../../assets/images/" +
-                                      item.img)}
-                                    alt=""
-                                  /> */}
                                   <img
-                                    className="img-fluid img-60"
-                                    src=""
+                                    style={{ width: "5.6rem" }}
+                                    className=""
+                                    src="https://5.imimg.com/data5/PJ/DI/MY-3877854/round-neck-plain-tshirt-with-multi-color-design-500x500.png"
                                     alt=""
                                   />
                                 </td>
                                 <td>
                                   <div className="product-name">
                                     {/* <a href="#javascript">{item.category}</a> */}
-                                    <a href="#javascript">hhhhhhhhhh</a>
+                                    <a href="#javascript">{item.name}</a>
                                   </div>
                                 </td>
-                                <td>{/* {item.price} */}</td>
+                                <td>{item.price}</td>
                                 <td>
                                   <fieldset className="qty-box">
-                                    <div className="input-group">
+                                    <div className="input-group d-flex flex-row">
                                       <span className="input-group-prepend">
                                         <button
                                           type="button"
@@ -109,7 +105,7 @@ const AddToCart = (props) => {
                                       <input
                                         type="text"
                                         name="quantity"
-                                        value={"15"}
+                                        value={item.qty}
                                         // value={item.qty}
                                         readOnly={true}
                                         className="form-control input-number"
@@ -137,8 +133,8 @@ const AddToCart = (props) => {
                                   </a>
                                 </td>
                                 <td>
-                                  255555555555555555
-                                  {/* {symbol} {item.price * item.qty} */}
+                                  {item.price * item.qty}
+                                  {/* {symbol} {} */}
                                 </td>
                               </tr>
                             );

@@ -122,7 +122,7 @@ const EcommerceApp = (props) => {
 
   const addcart = (product, qty) => {
     dispatch({ type: 'ADD_TO_CART', payload: { product, qty } })
-    props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
+    // props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
   }
 
   const addWishList = (product) => {
@@ -134,7 +134,6 @@ const EcommerceApp = (props) => {
     setSearchKeyword(keyword)
     dispatch({ type: 'SEARCH_BY', search: keyword })
   }
-
   return (
     <Fragment>
       <Breadcrumb title="Product" parent="Ecommerce" />

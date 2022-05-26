@@ -63,6 +63,7 @@ const Header = (props) => {
   function openCartWindow() {
     setCartWindow(!cartWindow);
   }
+  console.log("props are", props)
   return (
     <Fragment>
       <div className="page-main-header" >

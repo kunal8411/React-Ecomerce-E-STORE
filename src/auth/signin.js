@@ -28,8 +28,8 @@ const Signin = ({ history }) => {
  
     const loginAuth = async () => {
         try {
-            await firebase_app.auth().signInWithEmailAndPassword(email, password);
-            setValue(man); 
+            // await firebase_app.auth().signInWithEmailAndPassword(email, password);
+            // setValue(man); 
             localStorage.setItem('token', Jwt_token);
             history.push(`${process.env.PUBLIC_URL}/dashboard/default`);
 
