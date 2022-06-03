@@ -18,6 +18,7 @@ import University from './components/dashboard/university';
 import Crypto from './components/dashboard/crypto/crypto-component';
 import ServerComponent from './components/dashboard/server/server-component';
 import Project from './components/dashboard/project/project';
+import Home from './pages/home.jsx';
 
 // widgets
 import General from './components/widgets/general';
@@ -296,6 +297,7 @@ const Root = () => {
                                     <Route path={`${process.env.PUBLIC_URL}/dashboard/crypto`} component={Crypto} />
                                     <Route path={`${process.env.PUBLIC_URL}/dashboard/server`} component={ServerComponent} />
                                     <Route path={`${process.env.PUBLIC_URL}/dashboard/project`} component={Project} />
+                                    <Route path={`${process.env.PUBLIC_URL}/main`} component={Home} />
 
                                     {/* Widgets Menu */}
                                     <Route path={`${process.env.PUBLIC_URL}/widgets/general`} component={General} /> 

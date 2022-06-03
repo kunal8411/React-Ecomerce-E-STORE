@@ -31,7 +31,7 @@ const Signin = ({ history }) => {
             // await firebase_app.auth().signInWithEmailAndPassword(email, password);
             // setValue(man); 
             localStorage.setItem('token', Jwt_token);
-            history.push(`${process.env.PUBLIC_URL}/dashboard/default`);
+            history.push(`${process.env.PUBLIC_URL}/main`);
 
         } catch (error) {
             setTimeout(() => {
