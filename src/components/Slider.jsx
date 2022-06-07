@@ -54,7 +54,7 @@ const ImgContainer = styled.div`
 `;
 // background-image: url("https://images-eu.ssl-images-amazon.com/images/G/31/img22/OP/BTS/V2/D22170942_IN_OP_School_from_home_Apr21_3000x1200._CB636844586_.jpg");
 const SliderImageContainer = styled.div`
-  background: url(${props => props.imageSrc}) no-repeat top center;
+  background: url(${(props) => props.imageSrc}) no-repeat top center;
   height: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -120,7 +120,7 @@ export default function Slider() {
       setCurrentSlide((prev) => {
         return prev + 1 === slides.length ? 0 : prev + 1;
       });
-    }, 4000);
+    }, 2500);
     return () => {
       clearInterval(intervalId);
     };
@@ -145,22 +145,15 @@ export default function Slider() {
   };
   return (
     <Container>
-      {/* <Arrow direction="left" onClick={() => handleClick("left")}>
-        <ArrowLeftOutlined />
-      </Arrow> */}
       <Wrapper slideIndex={slideIndex}>
         {sliderItems.map((item) => (
           <Slide key={item.id}>
             <SliderImageContainer
               imageSrc={slides[currentSlide].link}
             ></SliderImageContainer>
-            {/* <div className="hero-image"></div> */}
           </Slide>
         ))}
       </Wrapper>
-      {/* <Arrow direction="right" onClick={() => handleClick("right")}>
-        <ArrowRightOutlined />
-      </Arrow> */}
     </Container>
   );
 }

@@ -1,3 +1,7 @@
+//url
+export const ServerUrl="http://localhost:5000" 
+
+
 // dashboard
 export const TotalVisits = "Total Visits"
 export const TotalSale = "Total Sale"

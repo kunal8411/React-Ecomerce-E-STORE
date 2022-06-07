@@ -30,26 +30,60 @@ export const MENUITEMS = [
         ]
     },
     {
-        title: 'Natural Oils', icon: Airplay, type: 'sub', active: false, children: [
-            { path: '/ecommerce/product', title: 'Essential Oils', type: 'link' },
-            { path: '/ecommerce/product', title: 'Carrier Oil', type: 'link' },
-            { path: '/ecommerce/product', title: 'Fragrance Oil', type: 'link' },
+        title: 'Mens', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'T-Shirt', type: 'link' },
+            { path: '/ecommerce/product', title: 'Shirt', type: 'link' },
+            { path: '/ecommerce/product', title: 'Jeans', type: 'link' },
+            { path: '/ecommerce/product', title: 'Cap', type: 'link' },
         ]
     },
     {
-        title: 'Raw Ingredients', icon: Airplay, type: 'sub', active: false, children: [
-            { path: '/ecommerce/product', title: 'Clays', type: 'link' },
-            { path: '/ecommerce/product', title: 'Waxes', type: 'link' },
-            { path: '/ecommerce/product', title: 'Butters', type: 'link' },
-            { path: '/ecommerce/product', title: 'Herbal Powder', type: 'link' },
+        title: 'Womens', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Top', type: 'link' },
+            { path: '/ecommerce/product', title: 'Ethenic Wear', type: 'link' },
+            { path: '/ecommerce/product', title: 'Footwear', type: 'link' },
+            { path: '/ecommerce/product', title: 'Jeans', type: 'link' },
+            { path: '/ecommerce/product', title: 'Watche', type: 'link' },
+            { path: '/ecommerce/product', title: 'Accessories', type: 'link' },
         ]
     },
     {
-        title: 'Diy', icon: Airplay, type: 'sub', active: false, children: [
-            { path: '/ecommerce/product', title: 'Soap Bases', type: 'link' },
-            { path: '/ecommerce/product', title: 'Colors', type: 'link' },
+        title: 'Kids', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Toy', type: 'link' },
+            { path: '/ecommerce/product', title: 'baby Care', type: 'link' },
+            { path: '/ecommerce/product', title: 'School Supplies', type: 'link' },
+            { path: '/ecommerce/product', title: 'Kids Clothing', type: 'link' },
         ]
     },
+    {
+        title: 'Home & Furniture', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/ecommerce/product', title: 'Home Decor', type: 'link' },
+            { path: '/ecommerce/product', title: 'Furnishing', type: 'link' },
+            { path: '/ecommerce/product', title: 'Office & Study Furniture', type: 'link' },
+            { path: '/ecommerce/product', title: 'Gardening Store', type: 'link' },
+        ]
+    },
+    // {
+    //     title: 'Natural Oils', icon: Airplay, type: 'sub', active: false, children: [
+    //         { path: '/ecommerce/product', title: 'Essential Oils', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Carrier Oil', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Fragrance Oil', type: 'link' },
+    //     ]
+    // },
+    // {
+    //     title: 'Raw Ingredients', icon: Airplay, type: 'sub', active: false, children: [
+    //         { path: '/ecommerce/product', title: 'Clays', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Waxes', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Butters', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Herbal Powder', type: 'link' },
+    //     ]
+    // },
+    // {
+    //     title: 'Diy', icon: Airplay, type: 'sub', active: false, children: [
+    //         { path: '/ecommerce/product', title: 'Soap Bases', type: 'link' },
+    //         { path: '/ecommerce/product', title: 'Colors', type: 'link' },
+    //     ]
+    // },
     {
         title: 'Base', icon: Box, type: 'sub', active: false, children: [
             { path: '/base/statecolor', title: 'State-color', type: 'link' },
