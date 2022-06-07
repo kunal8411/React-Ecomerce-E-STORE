@@ -12,7 +12,7 @@ import { SORT_BY } from "../../../redux/actionTypes";
 import { watchfetchProducts } from "../../../redux/ecommerce/product/action";
 import axios from "axios";
 import { ServerUrl } from "../../../constant";
-
+import Loader from '../../common/loader';
 import {
   Filters,
   ShowingProducts,
@@ -41,19 +41,23 @@ const EcommerceApp = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [open, setOpen] = useState(false);
   const [filterSidebar, setFilterSidebar] = useState(true);
+  const [loaderFlag, setLoaderFlag] = useState(false);
 
   const onCloseModal = () => {
     setOpen(false);
   };
 
   useEffect(() => {
+    setLoaderFlag(true);
     axios
       .get(
         `${ServerUrl}/product/findByCategory/${props.location.type}/${props.location.subType}`
       )
       .then((res) => console.log("res", res));
+
+    setLoaderFlag(false);
     // dispatch(watchfetchProducts());
-  });
+  }, [props.location.type, props.location.subType]);
 
   const filterSortFunc = (event) => {
     dispatch({ type: SORT_BY, sort_by: event });
@@ -158,406 +162,412 @@ const EcommerceApp = (props) => {
     setSearchKeyword(keyword);
     dispatch({ type: "SEARCH_BY", search: keyword });
   };
-  console.log("prosps", props.location);
-  console.log("LocalUrlLocalUrl", ServerUrl);
+  // console.log("prosps", props.location);
+  // console.log("LocalUrlLocalUrl", ServerUrl);
   return (
     <Fragment>
       <Breadcrumb title="Product" parent="Ecommerce" />
-      <div className="container-fluid product-wrapper">
-        <div className="product-grid">
-          {/* filter & Search div */}
-          <div className="feature-products">
-            <div className="row">
-              <div className="col-md-6 products-total">
-                <div className="square-product-setting d-inline-block">
-                  <a
-                    className="icon-grid grid-layout-view "
-                    href="#javascript"
-                    onClick={gridLayout}
-                    data-original-title=""
-                    title=""
+      {loaderFlag ? (
+        <Loader />
+      ) : (
+        <div className="container-fluid product-wrapper">
+          <div className="product-grid">
+            {/* filter & Search div */}
+            <div className="feature-products">
+              <div className="row">
+                <div className="col-md-6 products-total">
+                  <div className="square-product-setting d-inline-block">
+                    <a
+                      className="icon-grid grid-layout-view "
+                      href="#javascript"
+                      onClick={gridLayout}
+                      data-original-title=""
+                      title=""
+                    >
+                      <Grid />
+                    </a>
+                  </div>
+                  <div className="square-product-setting d-inline-block">
+                    <a
+                      className="icon-grid m-0 list-layout-view"
+                      href="#javascript"
+                      onClick={listLayout}
+                      data-original-title=""
+                      title=""
+                    >
+                      <List />
+                    </a>
+                  </div>
+                  <span
+                    className="d-none-productlist filter-toggle"
+                    onClick={() => setFilterSidebar(!filterSidebar)}
                   >
-                    <Grid />
-                  </a>
+                    <h6 className="mb-0">
+                      {Filters}
+                      <span className="ml-2">
+                        <ChevronDown className="toggle-data" />
+                      </span>
+                    </h6>
+                  </span>
+                  <div className="grid-options d-inline-block">
+                    <ul>
+                      <li>
+                        <a
+                          className="product-2-layout-view"
+                          href="#javascript"
+                          onClick={() => LayoutView(6)}
+                          data-original-title=""
+                          title=""
+                        >
+                          <span className="line-grid line-grid-1 bg-primary"></span>
+                          <span className="line-grid line-grid-2 bg-primary"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="product-3-layout-view"
+                          href="#javascript"
+                          onClick={() => LayoutView(4)}
+                          data-original-title=""
+                          title=""
+                        >
+                          <span className="line-grid line-grid-3 bg-primary"></span>
+                          <span className="line-grid line-grid-4 bg-primary"></span>
+                          <span className="line-grid line-grid-5 bg-primary"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="product-4-layout-view"
+                          href="#javascript"
+                          onClick={() => LayoutView(3)}
+                          data-original-title=""
+                          title=""
+                        >
+                          <span className="line-grid line-grid-6 bg-primary"></span>
+                          <span className="line-grid line-grid-7 bg-primary"></span>
+                          <span className="line-grid line-grid-8 bg-primary"></span>
+                          <span className="line-grid line-grid-9 bg-primary"></span>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className="product-6-layout-view"
+                          href="#javascript"
+                          onClick={() => LayoutView(2)}
+                          data-original-title=""
+                          title=""
+                        >
+                          <span className="line-grid line-grid-10 bg-primary"></span>
+                          <span className="line-grid line-grid-11 bg-primary"></span>
+                          <span className="line-grid line-grid-12 bg-primary"></span>
+                          <span className="line-grid line-grid-13 bg-primary"></span>
+                          <span className="line-grid line-grid-14 bg-primary"></span>
+                          <span className="line-grid line-grid-15 bg-primary"></span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="square-product-setting d-inline-block">
-                  <a
-                    className="icon-grid m-0 list-layout-view"
-                    href="#javascript"
-                    onClick={listLayout}
-                    data-original-title=""
-                    title=""
-                  >
-                    <List />
-                  </a>
-                </div>
-                <span
-                  className="d-none-productlist filter-toggle"
-                  onClick={() => setFilterSidebar(!filterSidebar)}
-                >
-                  <h6 className="mb-0">
-                    {Filters}
-                    <span className="ml-2">
-                      <ChevronDown className="toggle-data" />
-                    </span>
-                  </h6>
-                </span>
-                <div className="grid-options d-inline-block">
-                  <ul>
-                    <li>
-                      <a
-                        className="product-2-layout-view"
-                        href="#javascript"
-                        onClick={() => LayoutView(6)}
-                        data-original-title=""
-                        title=""
-                      >
-                        <span className="line-grid line-grid-1 bg-primary"></span>
-                        <span className="line-grid line-grid-2 bg-primary"></span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="product-3-layout-view"
-                        href="#javascript"
-                        onClick={() => LayoutView(4)}
-                        data-original-title=""
-                        title=""
-                      >
-                        <span className="line-grid line-grid-3 bg-primary"></span>
-                        <span className="line-grid line-grid-4 bg-primary"></span>
-                        <span className="line-grid line-grid-5 bg-primary"></span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="product-4-layout-view"
-                        href="#javascript"
-                        onClick={() => LayoutView(3)}
-                        data-original-title=""
-                        title=""
-                      >
-                        <span className="line-grid line-grid-6 bg-primary"></span>
-                        <span className="line-grid line-grid-7 bg-primary"></span>
-                        <span className="line-grid line-grid-8 bg-primary"></span>
-                        <span className="line-grid line-grid-9 bg-primary"></span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        className="product-6-layout-view"
-                        href="#javascript"
-                        onClick={() => LayoutView(2)}
-                        data-original-title=""
-                        title=""
-                      >
-                        <span className="line-grid line-grid-10 bg-primary"></span>
-                        <span className="line-grid line-grid-11 bg-primary"></span>
-                        <span className="line-grid line-grid-12 bg-primary"></span>
-                        <span className="line-grid line-grid-13 bg-primary"></span>
-                        <span className="line-grid line-grid-14 bg-primary"></span>
-                        <span className="line-grid line-grid-15 bg-primary"></span>
-                      </a>
-                    </li>
-                  </ul>
+                <div className="col-md-6 text-right">
+                  <span className="f-w-600 m-r-10">{ShowingProducts}</span>
+                  <div className="select2-drpdwn-product select-options d-inline-block">
+                    <select
+                      className="form-control btn-square"
+                      onChange={(e) => filterSortFunc(e.target.value)}
+                    >
+                      <option value="">{"Sorting items"}</option>
+                      <option value="HighToLow">{"Price: High to Low"}</option>
+                      <option value="LowToHigh">{"Price: Low to High"}</option>
+                      <option value="Newest">{"Newest Items"}</option>
+                      <option value="AscOrder">{"Sort By Name: A To Z"}</option>
+                      <option value="DescOrder">
+                        {"Sort By Name: Z To A"}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div className="col-md-6 text-right">
-                <span className="f-w-600 m-r-10">{ShowingProducts}</span>
-                <div className="select2-drpdwn-product select-options d-inline-block">
-                  <select
-                    className="form-control btn-square"
-                    onChange={(e) => filterSortFunc(e.target.value)}
+              <div className="row">
+                <div className="col-sm-3">
+                  <div
+                    className={`product-sidebar ${filterSidebar ? "" : "open"}`}
                   >
-                    <option value="">{"Sorting items"}</option>
-                    <option value="HighToLow">{"Price: High to Low"}</option>
-                    <option value="LowToHigh">{"Price: Low to High"}</option>
-                    <option value="Newest">{"Newest Items"}</option>
-                    <option value="AscOrder">{"Sort By Name: A To Z"}</option>
-                    <option value="DescOrder">{"Sort By Name: Z To A"}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-3">
-                <div
-                  className={`product-sidebar ${filterSidebar ? "" : "open"}`}
-                >
-                  <div className="filter-section">
-                    <div className="card">
-                      <div className="card-header">
-                        <h6 className="mb-0 f-w-600">
-                          {Filters}
-                          <span className="pull-right">
-                            <i
-                              className="fa fa-chevron-down toggle-data"
-                              onClick={onClickFilter}
-                            ></i>
-                          </span>
-                        </h6>
-                      </div>
-                      <div className="left-filter">
-                        <div className="card-body filter-cards-view animate-chk">
-                          <AllFilters />
-                          <Carousal />
-                          <div className="product-filter text-center">
-                            <img
-                              className="img-fluid banner-product"
-                              src={banner}
-                              alt=""
-                              data-original-title=""
-                              title=""
-                            />
-                          </div>
+                    <div className="filter-section">
+                      <div className="card">
+                        <div className="card-header">
+                          <h6 className="mb-0 f-w-600">
+                            {Filters}
+                            <span className="pull-right">
+                              <i
+                                className="fa fa-chevron-down toggle-data"
+                                onClick={onClickFilter}
+                              ></i>
+                            </span>
+                          </h6>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-9 col-sm-12">
-                <form>
-                  <div className="form-group m-0">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="search"
-                      defaultValue={searchKeyword}
-                      onChange={(e) => handleSearchKeyword(e.target.value)}
-                    />
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          {/* div to discplay the products */}
-          <div className="product-wrapper-grid">
-            {searchKeyword.length > 0 ? (
-              <div className="search-not-found text-center">
-                <div>
-                  <img
-                    className="img-fluid second-search"
-                    src={errorImg}
-                    alt=""
-                  />
-                  <p>{NotFoundData}</p>
-                </div>
-              </div>
-            ) : (
-              <div className="row gridRow">
-                {products
-                  ? products.map((item, i) => (
-                      <div
-                        className={`${
-                          layoutColumns === 3
-                            ? "col-xl-3 col-sm-6 xl-4 col-grid-box"
-                            : "col-xl-" + layoutColumns
-                        }`}
-                        key={i}
-                      >
-                        <div className="card">
-                          <div className="product-box">
-                            <div className="product-img">
-                              {item.status === "sale" ? (
-                                <span className="ribbon ribbon-danger">
-                                  {item.status}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "50%" ? (
-                                <span className="ribbon ribbon-success ribbon-right">
-                                  {item.status}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "gift" ? (
-                                <span className="ribbon ribbon-secondary ribbon-vertical-left">
-                                  <i className="icon-gift">{item.status}</i>
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "love" ? (
-                                <span className="ribbon ribbon-bookmark ribbon-vertical-right ribbon-info">
-                                  <i className="icon-heart">{item.status}</i>
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {item.status === "Hot" ? (
-                                <span className="ribbon ribbon ribbon-clip ribbon-warning">
-                                  {item.status}
-                                </span>
-                              ) : (
-                                ""
-                              )}
-                              {/* <img className="img-fluid" src={require("../../../assets/images/" + item.img)} alt="" /> */}
+                        <div className="left-filter">
+                          <div className="card-body filter-cards-view animate-chk">
+                            <AllFilters />
+                            <Carousal />
+                            <div className="product-filter text-center">
                               <img
-                                className="img-fluid"
-                                src="https://5.imimg.com/data5/PJ/DI/MY-3877854/round-neck-plain-tshirt-with-multi-color-design-500x500.png"
+                                className="img-fluid banner-product"
+                                src={banner}
                                 alt=""
+                                data-original-title=""
+                                title=""
                               />
-                              <div className="product-hover">
-                                <ul>
-                                  <li>
-                                    <button
-                                      className="btn"
-                                      type="button"
-                                      onClick={() => addcart(item, quantity)}
-                                    >
-                                      <i className="icon-shopping-cart"></i>
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      className="btn"
-                                      type="button"
-                                      data-toggle="modal"
-                                      onClick={() => onOpenModal(item.id)}
-                                      data-target="#exampleModalCenter"
-                                    >
-                                      <i className="icon-eye"></i>
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      className="btn"
-                                      type="button"
-                                      onClick={() => addWishList(item)}
-                                    >
-                                      <i className="icon-heart"></i>
-                                    </button>
-                                  </li>
-                                </ul>
-                              </div>
                             </div>
-                            <div className="product-details">
-                              <h5>
-                                <a
-                                  onClick={() => onClickDetailPage(item)}
-                                  className="font-primary"
-                                  href="#javascript"
-                                >
-                                  {item.name}
-                                </a>
-                              </h5>
-                              <div className="product-price">
-                                <del>
-                                  {symbol} {item.discountPrice}{" "}
-                                </del>
-                                {symbol} {item.price}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  : ""}
-                <Modal open={open} onClose={onCloseModal}>
-                  <div className="modal-body">
-                    <div className="product-modal row">
-                      <div className="product-img col-md-6">
-                        <img
-                          className="img-fluid"
-                          src={
-                            singleProduct.img
-                              ? require("../../../assets/images/" +
-                                  singleProduct.img)
-                              : ""
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div className="product-details col-md-6 text-left">
-                        <h3>{singleProduct.category}</h3>
-                        <div className="product-price">
-                          <del>
-                            {symbol}
-                            {singleProduct.discountPrice}
-                          </del>{" "}
-                          {symbol}
-                          {singleProduct.price}
-                        </div>
-                        <div className="product-view">
-                          <h6 className="f-w-600">{ProductDetails}</h6>
-                          <p className="mb-0">{singleProduct.discription}</p>
-                        </div>
-                        <div className="product-size">
-                          <ul>
-                            {ProductSizeArray.map((items, i) => (
-                              <li key={i}>
-                                <button className="btn btn-outline-light">
-                                  {items}
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div className="product-qnty">
-                          <h6 className="f-w-600">{Quantity}</h6>
-                          <fieldset className="qty-box">
-                            <div className="input-group">
-                              <span className="input-group-prepend">
-                                <button
-                                  type="button"
-                                  className="btn quantity-left-minus"
-                                  onClick={minusQty}
-                                  data-type="minus"
-                                  data-field=""
-                                >
-                                  <i className="fa fa-minus"></i>
-                                </button>
-                              </span>
-                              <input
-                                type="text"
-                                name="quantity"
-                                value={quantity}
-                                onChange={changeQty}
-                                className="form-control input-number"
-                              />
-                              <span className="input-group-append">
-                                <button
-                                  type="button"
-                                  className="btn quantity-right-plus"
-                                  onClick={plusQty}
-                                  data-type="plus"
-                                  data-field=""
-                                >
-                                  <i className="fa fa-plus"></i>
-                                </button>
-                              </span>
-                            </div>
-                          </fieldset>
-                          <div className="addcart-btn">
-                            <button
-                              className="btn btn-primary m-r-10"
-                              type="button"
-                              onClick={() => addcart(singleProduct, quantity)}
-                            >
-                              {AddToCart}
-                            </button>
-                            <button
-                              className="btn btn-success"
-                              type="button"
-                              onClick={() => onClickDetailPage(singleProduct)}
-                            >
-                              {ViewDetails}
-                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </Modal>
+                </div>
+                <div className="col-md-9 col-sm-12">
+                  <form>
+                    <div className="form-group m-0">
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="search"
+                        defaultValue={searchKeyword}
+                        onChange={(e) => handleSearchKeyword(e.target.value)}
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
-            )}
+            </div>
+
+            {/* div to discplay the products */}
+            <div className="product-wrapper-grid">
+              {searchKeyword.length > 0 ? (
+                <div className="search-not-found text-center">
+                  <div>
+                    <img
+                      className="img-fluid second-search"
+                      src={errorImg}
+                      alt=""
+                    />
+                    <p>{NotFoundData}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="row gridRow">
+                  {products
+                    ? products.map((item, i) => (
+                        <div
+                          className={`${
+                            layoutColumns === 3
+                              ? "col-xl-3 col-sm-6 xl-4 col-grid-box"
+                              : "col-xl-" + layoutColumns
+                          }`}
+                          key={i}
+                        >
+                          <div className="card">
+                            <div className="product-box">
+                              <div className="product-img">
+                                {item.status === "sale" ? (
+                                  <span className="ribbon ribbon-danger">
+                                    {item.status}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {item.status === "50%" ? (
+                                  <span className="ribbon ribbon-success ribbon-right">
+                                    {item.status}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {item.status === "gift" ? (
+                                  <span className="ribbon ribbon-secondary ribbon-vertical-left">
+                                    <i className="icon-gift">{item.status}</i>
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {item.status === "love" ? (
+                                  <span className="ribbon ribbon-bookmark ribbon-vertical-right ribbon-info">
+                                    <i className="icon-heart">{item.status}</i>
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {item.status === "Hot" ? (
+                                  <span className="ribbon ribbon ribbon-clip ribbon-warning">
+                                    {item.status}
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
+                                {/* <img className="img-fluid" src={require("../../../assets/images/" + item.img)} alt="" /> */}
+                                <img
+                                  className="img-fluid"
+                                  src="https://5.imimg.com/data5/PJ/DI/MY-3877854/round-neck-plain-tshirt-with-multi-color-design-500x500.png"
+                                  alt=""
+                                />
+                                <div className="product-hover">
+                                  <ul>
+                                    <li>
+                                      <button
+                                        className="btn"
+                                        type="button"
+                                        onClick={() => addcart(item, quantity)}
+                                      >
+                                        <i className="icon-shopping-cart"></i>
+                                      </button>
+                                    </li>
+                                    <li>
+                                      <button
+                                        className="btn"
+                                        type="button"
+                                        data-toggle="modal"
+                                        onClick={() => onOpenModal(item.id)}
+                                        data-target="#exampleModalCenter"
+                                      >
+                                        <i className="icon-eye"></i>
+                                      </button>
+                                    </li>
+                                    <li>
+                                      <button
+                                        className="btn"
+                                        type="button"
+                                        onClick={() => addWishList(item)}
+                                      >
+                                        <i className="icon-heart"></i>
+                                      </button>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="product-details">
+                                <h5>
+                                  <a
+                                    onClick={() => onClickDetailPage(item)}
+                                    className="font-primary"
+                                    href="#javascript"
+                                  >
+                                    {item.name}
+                                  </a>
+                                </h5>
+                                <div className="product-price">
+                                  <del>
+                                    {symbol} {item.discountPrice}{" "}
+                                  </del>
+                                  {symbol} {item.price}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    : ""}
+                  <Modal open={open} onClose={onCloseModal}>
+                    <div className="modal-body">
+                      <div className="product-modal row">
+                        <div className="product-img col-md-6">
+                          <img
+                            className="img-fluid"
+                            src={
+                              singleProduct.img
+                                ? require("../../../assets/images/" +
+                                    singleProduct.img)
+                                : ""
+                            }
+                            alt=""
+                          />
+                        </div>
+                        <div className="product-details col-md-6 text-left">
+                          <h3>{singleProduct.category}</h3>
+                          <div className="product-price">
+                            <del>
+                              {symbol}
+                              {singleProduct.discountPrice}
+                            </del>{" "}
+                            {symbol}
+                            {singleProduct.price}
+                          </div>
+                          <div className="product-view">
+                            <h6 className="f-w-600">{ProductDetails}</h6>
+                            <p className="mb-0">{singleProduct.discription}</p>
+                          </div>
+                          <div className="product-size">
+                            <ul>
+                              {ProductSizeArray.map((items, i) => (
+                                <li key={i}>
+                                  <button className="btn btn-outline-light">
+                                    {items}
+                                  </button>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="product-qnty">
+                            <h6 className="f-w-600">{Quantity}</h6>
+                            <fieldset className="qty-box">
+                              <div className="input-group">
+                                <span className="input-group-prepend">
+                                  <button
+                                    type="button"
+                                    className="btn quantity-left-minus"
+                                    onClick={minusQty}
+                                    data-type="minus"
+                                    data-field=""
+                                  >
+                                    <i className="fa fa-minus"></i>
+                                  </button>
+                                </span>
+                                <input
+                                  type="text"
+                                  name="quantity"
+                                  value={quantity}
+                                  onChange={changeQty}
+                                  className="form-control input-number"
+                                />
+                                <span className="input-group-append">
+                                  <button
+                                    type="button"
+                                    className="btn quantity-right-plus"
+                                    onClick={plusQty}
+                                    data-type="plus"
+                                    data-field=""
+                                  >
+                                    <i className="fa fa-plus"></i>
+                                  </button>
+                                </span>
+                              </div>
+                            </fieldset>
+                            <div className="addcart-btn">
+                              <button
+                                className="btn btn-primary m-r-10"
+                                type="button"
+                                onClick={() => addcart(singleProduct, quantity)}
+                              >
+                                {AddToCart}
+                              </button>
+                              <button
+                                className="btn btn-success"
+                                type="button"
+                                onClick={() => onClickDetailPage(singleProduct)}
+                              >
+                                {ViewDetails}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Modal>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </Fragment>
   );
 };
