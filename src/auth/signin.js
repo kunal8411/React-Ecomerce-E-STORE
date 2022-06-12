@@ -24,8 +24,7 @@ import {
   LoginWithJWT,
 } from "../constant";
 import axios from "axios";
-import { ServerUrl } from "../constant/index";
-
+import { ServerUrl, setLoggedInUser,getLoggedInUser } from "../constant/index";
 const Signin = ({ history }) => {
   const { loginWithRedirect } = useAuth0();
   const [email, setEmail] = useState("");
@@ -36,6 +35,7 @@ const Signin = ({ history }) => {
   useEffect(() => {
     if (value !== null) localStorage.setItem("profileURL", value);
     else localStorage.setItem("profileURL", man);
+    
   }, [value]);
 
   const loginAuth = async () => {
@@ -46,21 +46,21 @@ const Signin = ({ history }) => {
       //     email: email,
       //     password: password,
       //   };
-      console.log("ServerUrlServerUrl", ServerUrl);
-      console.log("emailemailemailemailemail", email);
-      console.log("passwordpasswordpasswordpassword", password);
+    //   console.log("ServerUrlServerUrl", ServerUrl);
+    //   console.log("emailemailemailemailemail", email);
+    //   console.log("passwordpasswordpasswordpassword", password);
       axios
         .post(`${ServerUrl}/auth/login`, {
           email: email,
           password: password,
         })
-        .then(function (response) {
-        //   console.log("response is ---------------->", response);
-          localStorage.setItem("token", response.data.accessToken);
-          history.push(`${process.env.PUBLIC_URL}/main`);
+        .then(async function (response) {
+          console.log("response is ---------------->", response);
+          await setLoggedInUser(response.data);
+          await history.push(`${process.env.PUBLIC_URL}/main`);
         })
         .catch(function (error) {
-        //   console.log("error response -------------", error.response.data);
+          //   console.log("error response -------------", error.response.data);
           toast.error(error.response.data);
         });
     } catch (error) {

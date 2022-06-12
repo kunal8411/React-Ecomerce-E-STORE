@@ -223,7 +223,7 @@ import Pricing from './components/price/pricing';
 import configDB from './data/customizer/config'
 
 import Callback from './auth/callback'
-
+import {getLoggedInUser} from './constant/index'
 // setup fake backend
 configureFakeBackend();
 
@@ -231,8 +231,9 @@ configureFakeBackend();
 const Root = () => {
 
     const abortController = new AbortController();
-    const [currentUser, setCurrentUser] = useState(false);
-    const [authenticated,setAuthenticated] = useState(false)
+    // const [currentUser, setCurrentUser] = useState(false);
+    const [currentLoggesInUser, setLoggesInUser] = useState(null);
+    // const [authenticated,setAuthenticated] = useState(false);
     const jwt_token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -242,13 +243,15 @@ const Root = () => {
         const color = localStorage.getItem('color')
         console.log(color);
         const layout = localStorage.getItem('layout_version') || configDB.data.color.layout_version
-        firebase_app.auth().onAuthStateChanged(setCurrentUser);
-        setAuthenticated(JSON.parse(localStorage.getItem("authenticated")))
+        // firebase_app.auth().onAuthStateChanged(setCurrentUser);
+        // setAuthenticated(JSON.parse(localStorage.getItem("authenticated")))
         document.body.classList.add(layout);
         console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
         console.disableYellowBox = true;
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
-
+        let user = getLoggedInUser();
+        setLoggesInUser(user);
+        console.log("user is----->", user);
         return function cleanup() {
             abortController.abort();
         }
@@ -284,7 +287,7 @@ const Root = () => {
                             <Route path={`${process.env.PUBLIC_URL}/pages/errors/error503`} component={Error503} />
                             <Route  path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback/>} />
                             
-                            {currentUser !== null || authenticated || jwt_token ?
+                            {currentLoggesInUser || jwt_token ?
                             
                                 <App>
                                     {/* dashboard menu */}
