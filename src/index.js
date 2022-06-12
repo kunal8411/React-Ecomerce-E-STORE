@@ -454,7 +454,7 @@ const Root = () => {
                                     <Route path={`${process.env.PUBLIC_URL}/chat-app/chat`} component={Chat} />
 
                                     {/* Ecommerce App */}
-                                    <Route path={`${process.env.PUBLIC_URL}/ecommerce/product`} component={EcommerceApp} />
+                                    <Route path={`${process.env.PUBLIC_URL}/ecommerce/product/:type/:subType`} component={EcommerceApp} />
                                     <Route path={`${process.env.PUBLIC_URL}/ecommerce/cart/:id`} component={AddToCart} />
                                     <Route path={`${process.env.PUBLIC_URL}/ecommerce/wishlist/:id`} component={WishlistComponent} />
                                     <Route path={`${process.env.PUBLIC_URL}/ecommerce/product-detail/:id`} component={ProductDetail} />

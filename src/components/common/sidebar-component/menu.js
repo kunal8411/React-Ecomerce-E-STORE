@@ -31,20 +31,20 @@ export const MENUITEMS = [
     },
     {
         title: 'Mens', icon: Airplay, type: 'sub', active: false, children: [
-            { path: '/ecommerce/product', title: 'T-Shirt', type: 'link' },
-            { path: '/ecommerce/product', title: 'Shirt', type: 'link' },
-            { path: '/ecommerce/product', title: 'Jeans', type: 'link' },
-            { path: '/ecommerce/product', title: 'Cap', type: 'link' },
+            { path: '/ecommerce/product/Mens/T-Shirt', title: 'T-Shirt', type: 'link' },
+            { path: '/ecommerce/product/Mens/Shirt', title: 'Shirt', type: 'link' },
+            { path: '/ecommerce/product/Mens/Jeans', title: 'Jeans', type: 'link' },
+            { path: '/ecommerce/product/Mens/Cap', title: 'Cap', type: 'link' },
         ]
     },
     {
         title: 'Womens', icon: Airplay, type: 'sub', active: false, children: [
-            { path: '/ecommerce/product', title: 'Top', type: 'link' },
-            { path: '/ecommerce/product', title: 'Ethenic Wear', type: 'link' },
-            { path: '/ecommerce/product', title: 'Footwear', type: 'link' },
-            { path: '/ecommerce/product', title: 'Jeans', type: 'link' },
-            { path: '/ecommerce/product', title: 'Watche', type: 'link' },
-            { path: '/ecommerce/product', title: 'Accessories', type: 'link' },
+            { path: '/ecommerce/product/Womens/Top', title: 'Top', type: 'link' },
+            { path: '/ecommerce/product/Womens/Ethenic Wear', title: 'Ethenic Wear', type: 'link' },
+            { path: '/ecommerce/product/Womens/Footwear', title: 'Footwear', type: 'link' },
+            { path: '/ecommerce/product/Womens/Jeans', title: 'Jeans', type: 'link' },
+            { path: '/ecommerce/product/Womens/Watch', title: 'Watch', type: 'link' },
+            { path: '/ecommerce/product/Womens/Accessories', title: 'Accessories', type: 'link' },
         ]
     },
     {

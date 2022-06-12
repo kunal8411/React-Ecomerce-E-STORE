@@ -12,7 +12,10 @@ import { SORT_BY } from "../../../redux/actionTypes";
 import { watchfetchProducts } from "../../../redux/ecommerce/product/action";
 import axios from "axios";
 import { ServerUrl } from "../../../constant";
-import Loader from '../../common/loader';
+import Loader from "../../common/loader";
+import { withRouter } from "react-router";
+import {compose} from "redux"
+import { connect } from "react-redux";
 import {
   Filters,
   ShowingProducts,
@@ -28,7 +31,7 @@ const EcommerceApp = (props) => {
   const layoutColumns = 3;
   const data = useSelector((content) => content.Product.productItems);
   const filters = useSelector((content) => content.Filters);
-  const products = allProducts;
+  // const products = allProducts;
   // const products = getVisibleproducts(data, filters)
   const symbol = useSelector((content) => content.Product.symbol);
   const dispatch = useDispatch();
@@ -42,22 +45,26 @@ const EcommerceApp = (props) => {
   const [open, setOpen] = useState(false);
   const [filterSidebar, setFilterSidebar] = useState(true);
   const [loaderFlag, setLoaderFlag] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const onCloseModal = () => {
     setOpen(false);
   };
-
+  const setAllProducts =(data) => {
+    setProducts(data);
+    setLoaderFlag(false);
+  };
   useEffect(() => {
     setLoaderFlag(true);
     axios
       .get(
-        `${ServerUrl}/product/findByCategory/${props.location.type}/${props.location.subType}`
+        `${ServerUrl}/product/findByCategory/${props.match.params.type}/${props.match.params.subType}`
       )
-      .then((res) => console.log("res", res));
+      .then((res) => setAllProducts(res.data))
+      .catch((err) => setLoaderFlag(false));
 
-    setLoaderFlag(false);
     // dispatch(watchfetchProducts());
-  }, [props.location.type, props.location.subType]);
+  }, [props.match.params.type, props.match.params.subType]);
 
   const filterSortFunc = (event) => {
     dispatch({ type: SORT_BY, sort_by: event });
@@ -127,7 +134,7 @@ const EcommerceApp = (props) => {
   const onOpenModal = (productId) => {
     setOpen(true);
     products.map((product, i) => {
-      if (product.id === productId) {
+      if (product._id === productId) {
         setSingleProduct(product);
       }
       return 0;
@@ -162,8 +169,7 @@ const EcommerceApp = (props) => {
     setSearchKeyword(keyword);
     dispatch({ type: "SEARCH_BY", search: keyword });
   };
-  // console.log("prosps", props.location);
-  // console.log("LocalUrlLocalUrl", ServerUrl);
+  console.log("props are", props);
   return (
     <Fragment>
       <Breadcrumb title="Product" parent="Ecommerce" />
@@ -270,7 +276,7 @@ const EcommerceApp = (props) => {
                   </div>
                 </div>
                 <div className="col-md-6 text-right">
-                  <span className="f-w-600 m-r-10">{ShowingProducts}</span>
+                  {/* <span className="f-w-600 m-r-10">Showing Products 1 - 24 Of {products.length} Results</span> */}
                   <div className="select2-drpdwn-product select-options d-inline-block">
                     <select
                       className="form-control btn-square"
@@ -426,13 +432,15 @@ const EcommerceApp = (props) => {
                                         className="btn"
                                         type="button"
                                         data-toggle="modal"
-                                        onClick={() => onOpenModal(item.id)}
+                                        onClick={() => onOpenModal(item._id)}
                                         data-target="#exampleModalCenter"
                                       >
                                         <i className="icon-eye"></i>
                                       </button>
                                     </li>
-                                    <li>
+
+                                    {/* wishlist Button later in project I will need this  */}
+                                    {/* <li>
                                       <button
                                         className="btn"
                                         type="button"
@@ -440,7 +448,7 @@ const EcommerceApp = (props) => {
                                       >
                                         <i className="icon-heart"></i>
                                       </button>
-                                    </li>
+                                    </li> */}
                                   </ul>
                                 </div>
                               </div>
@@ -456,7 +464,7 @@ const EcommerceApp = (props) => {
                                 </h5>
                                 <div className="product-price">
                                   <del>
-                                    {symbol} {item.discountPrice}{" "}
+                                    {symbol} {"555"}{" "}
                                   </del>
                                   {symbol} {item.price}
                                 </div>
@@ -466,18 +474,17 @@ const EcommerceApp = (props) => {
                         </div>
                       ))
                     : ""}
+
+
+
+                  {/* View more modal */}
                   <Modal open={open} onClose={onCloseModal}>
                     <div className="modal-body">
                       <div className="product-modal row">
                         <div className="product-img col-md-6">
                           <img
                             className="img-fluid"
-                            src={
-                              singleProduct.img
-                                ? require("../../../assets/images/" +
-                                    singleProduct.img)
-                                : ""
-                            }
+                            src="https://5.imimg.com/data5/PJ/DI/MY-3877854/round-neck-plain-tshirt-with-multi-color-design-500x500.png"
                             alt=""
                           />
                         </div>
@@ -486,16 +493,17 @@ const EcommerceApp = (props) => {
                           <div className="product-price">
                             <del>
                               {symbol}
-                              {singleProduct.discountPrice}
+                              {"210"}
                             </del>{" "}
                             {symbol}
                             {singleProduct.price}
                           </div>
                           <div className="product-view">
                             <h6 className="f-w-600">{ProductDetails}</h6>
-                            <p className="mb-0">{singleProduct.discription}</p>
+                            <p className="mb-0">{singleProduct.productDetails}</p>
                           </div>
                           <div className="product-size">
+                            Available Sizes
                             <ul>
                               {ProductSizeArray.map((items, i) => (
                                 <li key={i}>
@@ -508,7 +516,7 @@ const EcommerceApp = (props) => {
                           </div>
                           <div className="product-qnty">
                             <h6 className="f-w-600">{Quantity}</h6>
-                            <fieldset className="qty-box">
+                            {/* <fieldset className="qty-box">
                               <div className="input-group">
                                 <span className="input-group-prepend">
                                   <button
@@ -540,15 +548,15 @@ const EcommerceApp = (props) => {
                                   </button>
                                 </span>
                               </div>
-                            </fieldset>
+                            </fieldset> */}
                             <div className="addcart-btn">
-                              <button
+                              {/* <button
                                 className="btn btn-primary m-r-10"
                                 type="button"
                                 onClick={() => addcart(singleProduct, quantity)}
                               >
                                 {AddToCart}
-                              </button>
+                              </button> */}
                               <button
                                 className="btn btn-success"
                                 type="button"
@@ -572,4 +580,16 @@ const EcommerceApp = (props) => {
   );
 };
 
-export default EcommerceApp;
+
+const mapStateToProps = (state) => ({
+  cart: state.Cart.cart,
+  stateVar:state
+});
+
+const mapDispatchToProps = {};
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(EcommerceApp);
+// export default EcommerceApp;

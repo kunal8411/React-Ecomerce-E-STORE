@@ -28,10 +28,10 @@ export default (state = INIT_STATE, action) => {
 
     switch (action.type) {
         case ADD_TO_CART:
-        const productId = action.payload.product.id
-        if (state.cart.findIndex(product => product.id === productId) !== -1) {
+        const productId = action.payload.product._id
+        if (state.cart.findIndex(product => product._id === productId) !== -1) {
             const cart = state.cart.reduce((cartAcc, product) => {
-                if (product.id === productId) {
+                if (product._id === productId) {
                     cartAcc.push({ ...product, qty: product.qty + 1, sum: (product.price) * (product.qty + 1) }) // Increment qty
                 } else {
                     cartAcc.push(product)
