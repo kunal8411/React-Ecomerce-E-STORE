@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal, ShoppingCart } from 'react-feather';
 import { EN } from '../../../constant'
 import { store, persistor } from '../../../store';
+import { connect } from "react-redux";
 
 const Header = (props) => {
   const [sidebar, setSidebar] = useState(false);
@@ -63,6 +64,7 @@ const Header = (props) => {
   function openCartWindow() {
     setCartWindow(!cartWindow);
   }
+  // console.log("props in header ", props)
   return (
     <Fragment>
       <div className="page-main-header" >
@@ -108,7 +110,7 @@ const Header = (props) => {
               <li className="onhover-dropdown"  >
                 <AddToCart />
                 <ShoppingCart />
-                <span className=""></span>
+                <span className="">{props?.cart?.length}</span>
                 <AddToCart />
               </li>
 
@@ -157,4 +159,11 @@ const Header = (props) => {
     </Fragment>
   )
 };
-export default Header;
+
+const mapStateToProps = (state) => ({
+  cart: state.Cart.cart,
+});
+
+const mapDispatchToProps = {};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+// export default Header;

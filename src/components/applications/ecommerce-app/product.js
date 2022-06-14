@@ -169,7 +169,7 @@ const EcommerceApp = (props) => {
     setSearchKeyword(keyword);
     dispatch({ type: "SEARCH_BY", search: keyword });
   };
-  console.log("props are", props);
+  // console.log("props are", props);
   return (
     <Fragment>
       <Breadcrumb title="Product" parent="Ecommerce" />

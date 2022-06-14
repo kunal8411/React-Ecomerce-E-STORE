@@ -28,9 +28,9 @@ const AddToCart = (props) => {
             </span>
           </li>
           {cart?.length > 0 ? (
-            cart.map((singleItem) => {
+            cart.map((singleItem, index) => {
               return (
-                <li>
+                <li id={index}>
                   <div className="media  ">
                     <div className="media-body d-flex flex-row justify-content-between">
                       <img
