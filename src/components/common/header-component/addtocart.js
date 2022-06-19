@@ -4,12 +4,9 @@ import { Notification, All } from "../../../constant";
 import { store, persistor } from "../../../store";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import {compose} from "redux"
+import { compose } from "redux";
 
 const AddToCart = (props) => {
-
-
-
   const addcart = (product, qty) => {
     // dispatch({ type: 'ADD_TO_CART', payload: { product, qty } })
     console.log("this.props.history", props);
@@ -17,6 +14,7 @@ const AddToCart = (props) => {
   };
 
   let { cart } = props;
+  // console.log("cart Items are", cart);
   return (
     <Fragment>
       <div>
@@ -43,7 +41,7 @@ const AddToCart = (props) => {
                           {singleItem.name}
                         </h6>
                         <h6 className="mt-0">
-                          ${singleItem.price * singleItem.qty}
+                          ${singleItem.price * 1}
                         </h6>
                       </div>
                       <p className="mt-2">
@@ -85,8 +83,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {};
-
-
 
 export default compose(
   withRouter,

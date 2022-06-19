@@ -4,6 +4,7 @@ import man from "../assets/images/dashboard/user.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { withRouter } from "react-router";
+
 import {
   firebase_app,
   googleProvider,
@@ -24,8 +25,13 @@ import {
   LoginWithJWT,
 } from "../constant";
 import axios from "axios";
-import { ServerUrl, setLoggedInUser,getLoggedInUser } from "../constant/index";
-const Signin = ({ history }) => {
+import { ServerUrl, setLoggedInUser } from "../constant/index";
+import { compose } from "redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { addNewUser } from "../redux/user/action";
+
+const Signin = ({ history, addNewUser }) => {
+  const dispatch = useDispatch();
   const { loginWithRedirect } = useAuth0();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,32 +41,22 @@ const Signin = ({ history }) => {
   useEffect(() => {
     if (value !== null) localStorage.setItem("profileURL", value);
     else localStorage.setItem("profileURL", man);
-    
   }, [value]);
 
   const loginAuth = async () => {
     try {
-      // await firebase_app.auth().signInWithEmailAndPassword(email, password);
-      // setValue(man);
-      //   let payload = {s
-      //     email: email,
-      //     password: password,
-      //   };
-    //   console.log("ServerUrlServerUrl", ServerUrl);
-    //   console.log("emailemailemailemailemail", email);
-    //   console.log("passwordpasswordpasswordpassword", password);
       axios
         .post(`${ServerUrl}/auth/login`, {
           email: email,
           password: password,
         })
         .then(async function (response) {
-          console.log("response is ---------------->", response);
+          dispatch(addNewUser(response.data));
           await setLoggedInUser(response.data);
           await history.push(`${process.env.PUBLIC_URL}/main`);
         })
         .catch(function (error) {
-          //   console.log("error response -------------", error.response.data);
+          console.log("error", error);
           toast.error(error.response.data);
         });
     } catch (error) {
@@ -296,4 +292,19 @@ const Signin = ({ history }) => {
   );
 };
 
-export default withRouter(Signin);
+const mapStateToProps = (state) => ({
+  cart: state.Cart.cart,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNewUser: (product, qty) => dispatch(addNewUser(product, qty)),
+  };
+};
+
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Signin);
+
+// export default withRouter(Signin);

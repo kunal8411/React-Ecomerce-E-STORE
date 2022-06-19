@@ -10,6 +10,7 @@ import Bookmarkapp from './bookmark/reducer'
 import Taskapp from './task/reducer'
 import Projectapp from './project/reducer'
 import Customizer from './customizer/reducer';
+import UserReducer from './user/reducer';
 
 const reducers = combineReducers({
     TodoApp,
@@ -22,7 +23,8 @@ const reducers = combineReducers({
     Bookmarkapp,
     Taskapp,
     Projectapp,
-    Customizer
+    Customizer,
+    UserReducer
 });
 
 export default reducers;

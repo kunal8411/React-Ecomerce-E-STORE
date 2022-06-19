@@ -232,16 +232,17 @@ const Root = () => {
 
     const abortController = new AbortController();
     // const [currentUser, setCurrentUser] = useState(false);
-    const [currentLoggesInUser, setLoggesInUser] = useState(null);
+    const [currentLoggesInUser, setLoggesInUser] = useState({});
     // const [authenticated,setAuthenticated] = useState(false);
     const jwt_token = localStorage.getItem('token');
-
+    
     useEffect(() => {
-
-        const requestOptions = { method: 'GET', headers: authHeader() };
-        fetch('/users', requestOptions).then(handleResponse)
+        async function getUser(){
+            let user =await  getLoggedInUser();    
+            await setLoggesInUser(user);
+        }
+        getUser()
         const color = localStorage.getItem('color')
-        console.log(color);
         const layout = localStorage.getItem('layout_version') || configDB.data.color.layout_version
         // firebase_app.auth().onAuthStateChanged(setCurrentUser);
         // setAuthenticated(JSON.parse(localStorage.getItem("authenticated")))
@@ -249,16 +250,13 @@ const Root = () => {
         console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
         console.disableYellowBox = true;
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/${color}.css`);
-        let user = getLoggedInUser();
-        setLoggesInUser(user);
-        console.log("user is----->", user);
+        
+        // console.log("user is----->", user);
         return function cleanup() {
             abortController.abort();
         }
-        
-    // eslint-disable-next-line
     }, []);
-
+    // console.log("currentLoggesInUsercurrentLoggesInUser",currentLoggesInUser);
     return (
         <div className="App">
             <Auth0Provider domain={auth0.domain} clientId={auth0.clientId} redirectUri={auth0.redirectUri}>
@@ -287,7 +285,7 @@ const Root = () => {
                             <Route path={`${process.env.PUBLIC_URL}/pages/errors/error503`} component={Error503} />
                             <Route  path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback/>} />
                             
-                            {currentLoggesInUser || jwt_token ?
+                            { currentLoggesInUser?
                             
                                 <App>
                                     {/* dashboard menu */}

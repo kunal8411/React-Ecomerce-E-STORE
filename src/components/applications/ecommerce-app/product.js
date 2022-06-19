@@ -16,13 +16,15 @@ import Loader from "../../common/loader";
 import { withRouter } from "react-router";
 import {compose} from "redux"
 import { connect } from "react-redux";
+import { addToCart } from '../../../redux/ecommerce/cart/action';
+
 import {
   Filters,
   ShowingProducts,
   NotFoundData,
   ProductDetails,
   Quantity,
-  AddToCart,
+  
   ViewDetails,
   ProductSizeArray,
 } from "../../../constant";
@@ -154,7 +156,8 @@ const EcommerceApp = (props) => {
   };
 
   const addcart = (product, qty) => {
-    dispatch({ type: "ADD_TO_CART", payload: { product, qty } });
+    dispatch(props.addToCart(product, qty));
+    // dispatch({ type: "ADD_TO_CART", payload: { product, qty } });
     // props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
   };
 
@@ -586,7 +589,11 @@ const mapStateToProps = (state) => ({
   stateVar:state
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => {
+  return {
+    addToCart: (product,qty) => dispatch(addToCart(product,qty))
+  }
+}
 
 export default compose(
   withRouter,

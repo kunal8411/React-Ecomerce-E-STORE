@@ -102,3 +102,5 @@ export const ADD_SIDEBAR_SETTINGS ="ADD_SIDEBAR_SETTINGS";
 export const ADD_COLOR = "ADD_COLOR";
 export const ADD_MIXlAYOUT = "ADD_MIXlAYOUT";
 
+//USER
+export const ADD_NEW_USER = "ADD_NEW_USER"

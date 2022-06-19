@@ -1,5 +1,4 @@
-import axios from "axios";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 //url
 export const ServerUrl = "http://localhost:5000";
@@ -1590,6 +1589,9 @@ export const setLoggedInUser = (user) => {
 export const getLoggedInUser = () => {
   // if (!sessionStorage.getItem("user")) return null;
   // return JSON.parse(sessionStorage.getItem("user"));
-  if (!Cookies.get("user")) return null;
+  // console.log("Cookies.)", Cookies.get("user"));
+  if (!Cookies.get("user")) {
+    return null;
+  } 
   return JSON.parse(Cookies.get("user"));
 };
