@@ -1,23 +1,36 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import logo from '../../../assets/images/endless-logo.png';
-import Language from './language';
 import UserMenu from './userMenu';
 import Notification from './notification';
 import AddToCart from './addtocart';
 import SearchHeader from './searchHeader';
 import { Link } from 'react-router-dom';
-import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal, ShoppingCart } from 'react-feather';
-import { EN } from '../../../constant'
-import { store, persistor } from '../../../store';
+import { AlignLeft, Maximize, Bell, MoreHorizontal, ShoppingCart } from 'react-feather';
+import axios from 'axios';
 import { connect } from "react-redux";
-
+import { ServerUrl } from "../../../constant/index";
+import Cookies from "js-cookie";
+import { addToCart } from "../../../redux/ecommerce/cart/action";
 const Header = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const [rightSidebar, setRightSidebar] = useState(true);
   const [headerbar, setHeaderbar] = useState(true);
   const [cartWindow, setCartWindow] = useState(false);
   useEffect(() => {
-  })
+    const setCartDataInRedux=async (data)=>{
+      await localStorage.setItem("cartData", JSON.stringify(data))
+      await props.addToCart(data);
+    }
+    const getCartData = async () => {
+      let loggedInUseer = JSON.parse(Cookies.get("user"));
+      await axios
+        .get(`${ServerUrl}/api/carts/${loggedInUseer._id}`)
+        .then(async (res) => setCartDataInRedux(res.data))
+        .catch((err) => console.log(false));
+    };
+    getCartData();
+    
+  },[])
   const openCloseSidebar = () => {
     if (sidebar) {
       setSidebar(!sidebar)
@@ -64,7 +77,6 @@ const Header = (props) => {
   function openCartWindow() {
     setCartWindow(!cartWindow);
   }
-  // console.log("props in header ", props)
   return (
     <Fragment>
       <div className="page-main-header" >
@@ -164,6 +176,10 @@ const mapStateToProps = (state) => ({
   cart: state.Cart.cart,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps =(dispatch)=> {
+  return {
+    addToCart: (product, qty) => dispatch(addToCart(product, qty)),
+  };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
 // export default Header;

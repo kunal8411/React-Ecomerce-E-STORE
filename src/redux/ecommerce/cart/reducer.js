@@ -3,12 +3,11 @@ import {
   DECREMENT_QTY,
   REMOVE_FROM_CART,
 } from "../../../redux/actionTypes";
+
 const INIT_STATE = {
   cart: JSON.parse(localStorage.getItem("cartData")) || [],
   //   cart: [],
 };
-
-// get appi call for all the products in card for that user ->that will be my initaial state
 
 // function reducer (state = initState(), action) {
 //     return state
@@ -26,43 +25,11 @@ const INIT_STATE = {
 export default (state = INIT_STATE, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      //   console.log("Initial Cart", state.cart);
-      //   console.log("Product Id", action.payload.product._id);
-      const productId = action.payload.product._id;
-      if (state.cart.findIndex((product) => product.userData._id === productId) !== -1) {
-        const cart = state.cart.reduce((cartAcc, product) => {
-          console.log(" state product", product);
-          if (product.userData._id === productId) {
-            // increment cart quantity , update
-            cartAcc.push({
-              ...product,
-              qty: product.qty + 1,
-              sum: product.userData.price * (product.qty + 1),
-            });
-            
-            // Increment qty
-          } else {
-            //post method to add new Cart data
-            cartAcc.push(product);
-          }
-          return cartAcc;
-        }, []);
-
-        return { ...state, cart };
-      }
-
       return {
         ...state,
-        cart: [
-          ...state.cart,
-          {
-            ...action.payload.product,
-            qty: action.payload.qty,
-            sum: action.payload.product.price * action.payload.qty,
-          },
-        ],
+        cart: JSON.parse(localStorage.getItem("cartData")),
+        // ...action.payload,
       };
-
     case DECREMENT_QTY:
       if (
         state.cart.findIndex((product) => product.id === action.productId) !==

@@ -5,26 +5,23 @@ import { Grid, List, ChevronDown } from "react-feather";
 import banner from "../../../assets/images/ecommerce/12.jpg";
 import errorImg from "../../../assets/images/search-not-found.png";
 import Modal from "react-responsive-modal";
-import { getVisibleproducts } from "../../../services/index";
 import Carousal from "./filters/carousal";
 import AllFilters from "./filters/allfilters";
 import { SORT_BY } from "../../../redux/actionTypes";
-import { watchfetchProducts } from "../../../redux/ecommerce/product/action";
 import axios from "axios";
 import { ServerUrl } from "../../../constant";
 import Loader from "../../common/loader";
 import { withRouter } from "react-router";
-import {compose} from "redux"
+import { compose } from "redux";
 import { connect } from "react-redux";
-import { addToCart } from '../../../redux/ecommerce/cart/action';
-
+import { addToCart } from "../../../redux/ecommerce/cart/action";
+import Cookies from "js-cookie";
 import {
   Filters,
   ShowingProducts,
   NotFoundData,
   ProductDetails,
   Quantity,
-  
   ViewDetails,
   ProductSizeArray,
 } from "../../../constant";
@@ -52,7 +49,7 @@ const EcommerceApp = (props) => {
   const onCloseModal = () => {
     setOpen(false);
   };
-  const setAllProducts =(data) => {
+  const setAllProducts = (data) => {
     setProducts(data);
     setLoaderFlag(false);
   };
@@ -155,12 +152,32 @@ const EcommerceApp = (props) => {
     setQuantity(parseInt(e.target.value));
   };
 
-  const addcart = (product, qty) => {
-    dispatch(props.addToCart(product, qty));
-    // dispatch({ type: "ADD_TO_CART", payload: { product, qty } });
-    // props.history.push(`${process.env.PUBLIC_URL}/ecommerce/cart/${product.id}`);
+  const addcart = async (product, qty) => {
+    //make axios call here and
+    let loggedInUseer = JSON.parse(Cookies.get("user"));
+    await axios
+      .put(
+        `${ServerUrl}/api/carts/updateCart/increment/${loggedInUseer._id}/${product._id}`,
+        {}
+      )
+      .then(async function (response) {
+        await getCartData();
+      })
+      .catch(function (error) {
+        console.log("error", error);
+      });
   };
-
+  const getCartData = async () => {
+    let loggedInUseer = JSON.parse(Cookies.get("user"));
+    await axios
+      .get(`${ServerUrl}/api/carts/${loggedInUseer._id}`)
+      .then(async (res) => setCartDataInRedux(res.data))
+      .catch((err) => console.log(false));
+  };
+  const setCartDataInRedux=async (data)=>{
+    await localStorage.setItem("cartData", JSON.stringify(data))
+    await props.addToCart(data);
+  }
   const addWishList = (product) => {
     dispatch({ type: "ADD_TO_WISHLIST", payload: product });
     props.history.push(
@@ -172,7 +189,6 @@ const EcommerceApp = (props) => {
     setSearchKeyword(keyword);
     dispatch({ type: "SEARCH_BY", search: keyword });
   };
-  // console.log("props are", props);
   return (
     <Fragment>
       <Breadcrumb title="Product" parent="Ecommerce" />
@@ -478,8 +494,6 @@ const EcommerceApp = (props) => {
                       ))
                     : ""}
 
-
-
                   {/* View more modal */}
                   <Modal open={open} onClose={onCloseModal}>
                     <div className="modal-body">
@@ -503,7 +517,9 @@ const EcommerceApp = (props) => {
                           </div>
                           <div className="product-view">
                             <h6 className="f-w-600">{ProductDetails}</h6>
-                            <p className="mb-0">{singleProduct.productDetails}</p>
+                            <p className="mb-0">
+                              {singleProduct.productDetails}
+                            </p>
                           </div>
                           <div className="product-size">
                             Available Sizes
@@ -583,17 +599,16 @@ const EcommerceApp = (props) => {
   );
 };
 
-
 const mapStateToProps = (state) => ({
   cart: state.Cart.cart,
-  stateVar:state
+  stateVar: state,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: (product,qty) => dispatch(addToCart(product,qty))
-  }
-}
+    addToCart: (product, qty) => dispatch(addToCart(product, qty)),
+  };
+};
 
 export default compose(
   withRouter,
