@@ -90,6 +90,7 @@ import MesonryDesc from './components/gallery/mesonryDesc';
 // forms 
 import FormValidation from './components/forms/form-control/form-validation';
 import BaseInput from './components/forms/form-control/baseInput';
+import SubmitProduct from './components/forms/form-control/submit-product';
 import RadioCheckbox from './components/forms/form-control/radio-checkbox';
 import InputGroupComp from './components/forms/form-control/inputGroup';
 import MegaOptions from './components/forms/form-control/megaOptions';
@@ -288,6 +289,12 @@ const Root = () => {
                             { currentLoggesInUser?
                             
                                 <App>
+
+                                    {/* //if admin  */}
+                                    <Route path={`${process.env.PUBLIC_URL}/submit-product`} component={SubmitProduct} />
+
+
+                                    {/* //normal User */}
                                     {/* dashboard menu */}
                                     <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
                                         return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default`} />)

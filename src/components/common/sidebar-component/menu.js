@@ -23,6 +23,14 @@ export const MENUITEMS = [
             { path: '/dashboard/project', title: 'Project', type: 'link' }
         ]
     },
+    // adminroutes
+    {
+        title: 'All Products', icon: Airplay, type: 'sub', active: false, children: [
+            { path: '/submit-product', title: 'Submit Product', type: 'link' },
+            // { path: '/widgets/chart', title: 'Chart', type: 'link' },
+        ]
+    },
+    // normal user routes
     {
         title: 'Widgets', icon: Airplay, type: 'sub', active: false, children: [
             { path: '/widgets/general', title: 'General', type: 'link' },
@@ -50,7 +58,7 @@ export const MENUITEMS = [
     {
         title: 'Kids', icon: Airplay, type: 'sub', active: false, children: [
             { path: '/ecommerce/product', title: 'Toy', type: 'link' },
-            { path: '/ecommerce/product', title: 'baby Care', type: 'link' },
+            { path: '/ecommerce/product', title: 'Baby Care', type: 'link' },
             { path: '/ecommerce/product', title: 'School Supplies', type: 'link' },
             { path: '/ecommerce/product', title: 'Kids Clothing', type: 'link' },
         ]
